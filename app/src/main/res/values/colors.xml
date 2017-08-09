@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#464660</color>
+    <color name="colorPrimaryDark">#5e626d</color>
+    <color name="colorAccent">#9c6d75</color>
+    <color name="redrose">#7a343f</color>
+    <color name="redGlamour">#7a0d22</color>
+    <color name="palerose">#977778</color>
+</resources>

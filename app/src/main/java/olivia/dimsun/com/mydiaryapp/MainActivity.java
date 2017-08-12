@@ -5,29 +5,34 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 /*
 soucis find path + dex ./gradlew --stop + clean + rebuild
+
+TODO : SharedPref
+TODO : Constantes
+TODO : on long
+
+
  */
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private EntryDbHelper mHelper;
-    private ListView mEntryListView;
-    private ArrayAdapter<String> mAdapter;
-    TextView entryTextView;
-    long positionItem;
+    String date, text;
+    long itemID;
+    RecyclerView mRecyclerView;
+    ArrayList <Entry> list;
+    MainAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,102 +40,59 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mHelper = new EntryDbHelper(this);
-        entryTextView = (TextView) findViewById(R.id.entry_title);
-        mEntryListView = (ListView) findViewById(R.id.list_entry);
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv_main);
 
-       mEntryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-           @Override
-           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-               positionItem = id;
-               Intent editEntry = new Intent(MainActivity.this, AddEntry.class);
-               editEntry.putExtra("ENTRY", mAdapter.getItem(position));
-               startActivity(editEntry);
-               deleteTask(view);
-               finish();
-
-               Log.i("OnClick---> ", "Position : " +position+ " Id : " +id);
-
-
-           }
-       });
-
-        mEntryListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-                String intentTitle = "Envoi de MyDiaryApp";
-                String intTentText = mAdapter.getItem(position) + " -sent from MyDiaryApp";
-
-                Intent onLongClick = new Intent(Intent.ACTION_SEND);
-                onLongClick.setType("plain/text");
-                onLongClick.putExtra(Intent.EXTRA_SUBJECT, intentTitle);
-                onLongClick.putExtra(Intent.EXTRA_TEXT, intTentText);
-                startActivity(onLongClick);
-
-                return false;
-            }
-        });
-
+        swipe();
         updateUI();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+    private void swipe() {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add_entry:
-                add_new_entry();
-                Log.d(TAG, "Add a new task");
-                return true;
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                deleteTask(viewHolder);
+                updateUI();
+            }
+        }).attachToRecyclerView(mRecyclerView);
 
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void add_new_entry() {
-        Intent i = new Intent(this, AddEntry.class);
-        startActivity(i);
     }
 
     private void updateUI() {
-        ArrayList<String> taskList = new ArrayList<>();
+        list = new ArrayList<>();
+
         SQLiteDatabase db = mHelper.getReadableDatabase();
         Cursor cursor = db.query(EntryContract.TaskEntry.TABLE,
-                new String[]{EntryContract.TaskEntry._ID, EntryContract.TaskEntry.COL_TASK_TITLE},
+                new String[]{EntryContract.TaskEntry._ID, EntryContract.TaskEntry.COL_TASK_DATE, EntryContract.TaskEntry.COL_TASK_TITLE},
                 null, null, null, null, null);
+
         while (cursor.moveToNext()) {
-            int idx = cursor.getColumnIndex(EntryContract.TaskEntry.COL_TASK_TITLE);
-            taskList.add(cursor.getString(idx));
+
+            date= cursor.getString(cursor.getColumnIndex(EntryContract.TaskEntry.COL_TASK_DATE));
+            text= cursor.getString(cursor.getColumnIndex(EntryContract.TaskEntry.COL_TASK_TITLE));
+            itemID = (int) cursor.getLong(cursor.getColumnIndex(EntryContract.TaskEntry._ID));
+
+            Entry entry = new Entry(date, text, itemID);
+            list.add(entry);
+            Log.i(TAG, " date "+date+ " text " +text+ " id " +itemID);
         }
 
-        if (mAdapter == null) {
-            mAdapter = new ArrayAdapter<>(this,
-                    R.layout.row_list,
-                    R.id.entry_title,
-                    taskList);
-            mEntryListView.setAdapter(mAdapter);
-        } else {
-            mAdapter.clear();
-            mAdapter.addAll(taskList);
-            mAdapter.notifyDataSetChanged();
-        }
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv_main);
+        adapter = new MainAdapter(MainActivity.this, list);
+        mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
         cursor.close();
         db.close();
     }
 
-    public void deleteTask(View view) {
+    public void deleteTask(RecyclerView.ViewHolder viewHolder) {
 
-        View parent = (View) view.getParent();
-
-        TextView taskTextView = (TextView) parent.findViewById(R.id.entry_title);
+        TextView taskTextView = (TextView) viewHolder.itemView.findViewById(R.id.entry_title);
         String task = String.valueOf(taskTextView.getText());
 
         SQLiteDatabase db = mHelper.getWritableDatabase();
@@ -140,5 +102,10 @@ public class MainActivity extends AppCompatActivity {
                 new String[]{task});
         db.close();
         updateUI();
+    }
+
+    public void add(View view) {
+        Intent i = new Intent(this, AddEntry.class);
+        startActivity(i);
     }
 }

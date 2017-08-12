@@ -14,10 +14,14 @@ public class EntryDbHelper extends SQLiteOpenHelper {
         super(context, EntryContract.DB_NAME, null, EntryContract.DB_VERSION);
     }
 
+
+
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + EntryContract.TaskEntry.TABLE + " ( " +
                 EntryContract.TaskEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                EntryContract.TaskEntry.COL_TASK_DATE+ " TEXT NOT NULL, " +
                 EntryContract.TaskEntry.COL_TASK_TITLE + " TEXT NOT NULL);";
 
         db.execSQL(createTable);

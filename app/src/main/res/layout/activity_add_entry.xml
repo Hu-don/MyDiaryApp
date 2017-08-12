@@ -7,6 +7,13 @@
     android:orientation="vertical"
     tools:context="olivia.dimsun.com.mydiaryapp.AddEntry">
 
+    <TextView
+        android:id="@+id/idEdit"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <EditText
         android:padding="18dp"
         android:id="@+id/ed_entry"

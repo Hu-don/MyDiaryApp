@@ -4,6 +4,7 @@ import android.provider.BaseColumns;
 
 /**
  * Created by hudon on 08/08/2017.
+ * https://github.com/Clans/FloatingActionButton
  */
 
 public class EntryContract {
@@ -16,5 +17,6 @@ public class EntryContract {
 
         public static final String COL_TASK_ID = "id";
         public static final String COL_TASK_TITLE = "title";
+        public static final String COL_TASK_DATE = "date";
     }
 }

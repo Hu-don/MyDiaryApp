@@ -1,42 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center_vertical"
-    android:padding="4dp"
-    android:background="@drawable/selector"
+    android:layout_height="wrap_content"
+    xmlns:fab="http://schemas.android.com/tools"
+    android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    android:paddingLeft="16dp"
     android:id="@+id/relative_layout_row"
+    android:background="@drawable/itemselector"
     android:descendantFocusability="blocksDescendants"
     >
     <!--Empeche le click d'être consumé par les item dans la liste-->
 
-
     <TextView
-        android:padding="8dp"
-        android:hint="Hint"
+        android:text="Text"
         android:id="@+id/entry_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:lines="1"
+        android:ellipsize="end"
+        android:textColor="@color/text"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_alignParentTop="true"
-        android:layout_alignBottom="@+id/entry_delete"
-        android:layout_toStartOf="@+id/entry_delete" />
+        android:layout_toStartOf="@+id/entry_date" />
 
-    <ImageButton
-        android:id="@+id/entry_delete"
-        android:onClick="deleteTask"
+    <TextView
+        android:text="999999"
+        android:textStyle="italic"
+        android:id="@+id/entry_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_menu_delete"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:textSize="12sp"
+        android:gravity="bottom"
+        android:lines="1"
+        android:ellipsize="end"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_alignBottom="@+id/entry_title"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true" />
 
+    <TextView
+        android:text="id"
+        android:textStyle="italic"
+        android:id="@+id/idTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:gravity="bottom"
+        android:lines="1"
+        android:ellipsize="end"
+        android:visibility="gone"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_alignBottom="@+id/entry_title"
+         />
 
-    <!--<View-->
-        <!--android:layout_below="@id/entry_delete"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="1dp"-->
-        <!--android:background="@color/colorAccent" />-->
+    <View
+        android:layout_below="@id/entry_date"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/colorAccent" />
 
 </RelativeLayout>

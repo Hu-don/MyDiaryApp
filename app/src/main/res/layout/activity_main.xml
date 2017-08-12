@@ -3,22 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    >
+    android:descendantFocusability="blocksDescendants">
 
-    <LinearLayout
-        android:background="@drawable/shape"
-        android:orientation="vertical"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_main"
         android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 
-        <ListView
-            android:id="@+id/list_entry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+    <android.support.design.widget.FloatingActionButton
+        android:onClick="add"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+         android:src="@mipmap/ic_add_white_24dp"
+        android:minHeight="40dp"
+        android:minWidth="40dp"
+        android:layout_margin="16dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp" />
 
-    </LinearLayout>
 
 </RelativeLayout>

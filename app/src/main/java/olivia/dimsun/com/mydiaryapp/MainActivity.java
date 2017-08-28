@@ -16,12 +16,6 @@ import java.util.ArrayList;
 
 /*
 soucis find path + dex ./gradlew --stop + clean + rebuild
-
-TODO : SharedPref
-TODO : Constantes
-TODO : on long
-
-
  */
 
 public class MainActivity extends AppCompatActivity {

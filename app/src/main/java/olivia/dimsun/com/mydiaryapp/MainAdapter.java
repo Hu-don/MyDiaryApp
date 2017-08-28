@@ -15,10 +15,6 @@ import java.util.List;
 
 /**
  * Created by hudon on 10/08/2017.
- *
- * TODO : suppression : c'est toujours le premier item qui est supprimé
- * TODO : share + checkbutton
- * TODO : Mise en page
  */
 
 
@@ -75,7 +71,7 @@ class MainAdapter extends RecyclerView.Adapter <MainAdapter.RecyclerViewHolders>
         return this.itemList.size();
     }
 
-    class RecyclerViewHolders extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class RecyclerViewHolders extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView dateTV, titleTV, idTV;
 
@@ -92,15 +88,12 @@ class MainAdapter extends RecyclerView.Adapter <MainAdapter.RecyclerViewHolders>
         public void onClick(View view) {
 
             String text = String.valueOf(titleTV.getText());
+            String id = String.valueOf(idTV.getText());
 
             Intent i = new Intent(itemView.getContext(), AddEntry.class);
-            i.putExtra("ENTRY", text);
-            i.putExtra("ID", sid);
+            i.putExtra(Constantes.ENTRY, text);
+            i.putExtra(Constantes.ID, id);
             itemView.getContext().startActivity(i);
         }
-
     }
-
-
-
 }

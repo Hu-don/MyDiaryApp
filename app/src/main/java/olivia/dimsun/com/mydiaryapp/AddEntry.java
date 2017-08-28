@@ -15,25 +15,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-/*
-https://www.sitepoint.com/starting-android-development-creating-todo-app/
- */
 
 public class AddEntry extends AppCompatActivity {
 
     private EntryDbHelper mHelper;
     String intentText;
     Context context;
-    String idRetrieved;
     boolean isAnUpdate;
-    String entryStr;
     SimpleDateFormat dateFormat;
     Date date;
-    String dateStr;
-    String id;
+    String id, dateStr, entryStr, idRetrieved;
 
     private static final String TAG = "AddEntry :" ;
 
@@ -52,8 +46,9 @@ public class AddEntry extends AppCompatActivity {
         Intent retrieveIntent = getIntent();
 
         if (retrieveIntent != null){
-            intentText = retrieveIntent.getStringExtra("ENTRY");
-            idRetrieved = retrieveIntent.getStringExtra("ID");
+            intentText = retrieveIntent.getStringExtra(Constantes.ENTRY);
+            idRetrieved = retrieveIntent.getStringExtra(Constantes.ID);
+
             id = String.valueOf(idRetrieved);
             Log.i(TAG, "ID " +idRetrieved);
             entry.setText(intentText);
@@ -148,8 +143,9 @@ public class AddEntry extends AppCompatActivity {
         import java.util.Date;
         et non import android.icu.text.SimpleDateFormat; -> crash
          */
+
         entryStr = entry.getText().toString();
-        dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
         date = new Date();
         dateStr = dateFormat.format(date);
     }

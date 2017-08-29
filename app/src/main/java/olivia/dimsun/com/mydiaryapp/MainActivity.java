@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     ArrayList <Entry> list;
     MainAdapter adapter;
+    ImageView tuto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         mHelper = new EntryDbHelper(this);
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_main);
+        tuto = (ImageView) findViewById(R.id.tutoIMG);
 
         swipe();
         updateUI();
@@ -75,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, " date "+date+ " text " +text+ " id " +itemID);
         }
 
+
+        initTuto(list);
+
+
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_main);
         adapter = new MainAdapter(MainActivity.this, list);
         mRecyclerView.setAdapter(adapter);
@@ -82,6 +89,14 @@ public class MainActivity extends AppCompatActivity {
 
         cursor.close();
         db.close();
+    }
+
+    private void initTuto(ArrayList<Entry> list) {
+        if (!list.isEmpty()) {
+            tuto.setVisibility(View.GONE);
+        } else {
+            tuto.setVisibility(View.VISIBLE);
+        }
     }
 
     public void deleteTask(RecyclerView.ViewHolder viewHolder) {
@@ -101,5 +116,6 @@ public class MainActivity extends AppCompatActivity {
     public void add(View view) {
         Intent i = new Intent(this, AddEntry.class);
         startActivity(i);
+        finish();
     }
 }

@@ -29,7 +29,7 @@ public class AddEntry extends AppCompatActivity {
     Date date;
     String id, dateStr, entryStr, idRetrieved;
 
-    private static final String TAG = "AddEntry :" ;
+    private static final String TAG = "AddEntry :";
 
     EditText entry;
     TextView idEdit;
@@ -45,12 +45,12 @@ public class AddEntry extends AppCompatActivity {
 
         Intent retrieveIntent = getIntent();
 
-        if (retrieveIntent != null){
+        if (retrieveIntent != null) {
             intentText = retrieveIntent.getStringExtra(Constantes.ENTRY);
             idRetrieved = retrieveIntent.getStringExtra(Constantes.ID);
 
             id = String.valueOf(idRetrieved);
-            Log.i(TAG, "ID " +idRetrieved);
+            Log.i(TAG, "ID " + idRetrieved);
             entry.setText(intentText);
             idEdit.setText(id);
             if (id.contains("null")) {
@@ -58,7 +58,7 @@ public class AddEntry extends AppCompatActivity {
             } else {
                 isAnUpdate = true;
             }
-            Log.i(TAG, "is An Update "+isAnUpdate);
+            Log.i(TAG, "is An Update " + isAnUpdate);
         }
     }
 
@@ -87,7 +87,7 @@ public class AddEntry extends AppCompatActivity {
 
     private void saveEntry() {
 
-        Log.i(TAG, "saveENtry is an update "+isAnUpdate);
+        Log.i(TAG, "saveENtry is an update " + isAnUpdate);
 
         if (!isAnUpdate) {
             newEntry();
@@ -105,7 +105,7 @@ public class AddEntry extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void updateEntry(){
+    private void updateEntry() {
 
         init();
         SQLiteDatabase db = mHelper.getWritableDatabase();
@@ -113,12 +113,12 @@ public class AddEntry extends AppCompatActivity {
         long idLong = Long.valueOf(id);
         idEdit.setText(id);
         values.put(EntryContract.TaskEntry.COL_TASK_TITLE, entryStr);
-        db.update(EntryContract.TaskEntry.TABLE, values, "_id=" +idLong, null);
+        db.update(EntryContract.TaskEntry.TABLE, values, "_id=" + idLong, null);
         db.close();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void newEntry(){
+    private void newEntry() {
 
         init();
         SQLiteDatabase db = mHelper.getWritableDatabase();
@@ -150,5 +150,11 @@ public class AddEntry extends AppCompatActivity {
         dateStr = dateFormat.format(date);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent back = new Intent (this, MainActivity.class);
+        startActivity(back);
+        finish();
+    }
 }
 

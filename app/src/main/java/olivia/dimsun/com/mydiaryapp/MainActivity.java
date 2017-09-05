@@ -101,13 +101,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void deleteTask(RecyclerView.ViewHolder viewHolder) {
 
-        TextView taskTextView = (TextView) viewHolder.itemView.findViewById(R.id.entry_title);
-        String task = String.valueOf(taskTextView.getText());
+        TextView taskId = (TextView) viewHolder.itemView.findViewById(R.id.idTV);
+        String task = String.valueOf(taskId.getText());
 
         SQLiteDatabase db = mHelper.getWritableDatabase();
 
         db.delete(EntryContract.TaskEntry.TABLE,
-                EntryContract.TaskEntry.COL_TASK_TITLE + " = ?",
+                EntryContract.TaskEntry._ID + " = ?",
                 new String[]{task});
         db.close();
         updateUI();

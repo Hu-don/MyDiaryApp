@@ -22,12 +22,11 @@ import java.util.Date;
 public class AddEntry extends AppCompatActivity {
 
     private EntryDbHelper mHelper;
-    String intentText;
     Context context;
     boolean isAnUpdate;
     SimpleDateFormat dateFormat;
     Date date;
-    String id, dateStr, entryStr, idRetrieved;
+    String id, dateStr, entryStr, idRetrieved, intentText;
 
     private static final String TAG = "AddEntry :";
 
@@ -58,10 +57,10 @@ public class AddEntry extends AppCompatActivity {
             } else {
                 isAnUpdate = true;
             }
+
             Log.i(TAG, "is An Update " + isAnUpdate);
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,7 +86,7 @@ public class AddEntry extends AppCompatActivity {
 
     private void saveEntry() {
 
-        Log.i(TAG, "saveENtry is an update " + isAnUpdate);
+        Log.i(TAG, "saveEntry is an update " + isAnUpdate);
 
         if (!isAnUpdate) {
             newEntry();
@@ -133,7 +132,6 @@ public class AddEntry extends AppCompatActivity {
                 SQLiteDatabase.CONFLICT_REPLACE);
         db.close();
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void init() {

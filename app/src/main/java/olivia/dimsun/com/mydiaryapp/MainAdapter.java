@@ -1,6 +1,5 @@
 package olivia.dimsun.com.mydiaryapp;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -76,7 +75,7 @@ class MainAdapter extends RecyclerView.Adapter <MainAdapter.RecyclerViewHolders>
 
         TextView dateTV, titleTV, idTV;
 
-        public RecyclerViewHolders(View itemView) {
+        private RecyclerViewHolders(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
 
@@ -95,7 +94,7 @@ class MainAdapter extends RecyclerView.Adapter <MainAdapter.RecyclerViewHolders>
             i.putExtra(Constantes.ENTRY, text);
             i.putExtra(Constantes.ID, id);
             itemView.getContext().startActivity(i);
-            ((Activity) context).finish();
+            ((MainActivity) context).finish();
         }
     }
 }

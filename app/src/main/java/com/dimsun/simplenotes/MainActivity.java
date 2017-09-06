@@ -1,4 +1,4 @@
-package olivia.dimsun.com.mydiaryapp;
+package com.dimsun.simplenotes;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,6 +15,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import olivia.dimsun.com.simplenotes.AddEntry;
+import olivia.dimsun.com.simplenotes.EntryContract;
+import olivia.dimsun.com.simplenotes.EntryDbHelper;
+import olivia.dimsun.com.simplenotes.R;
+
 /*
 soucis find path + dex ./gradlew --stop + clean + rebuild
  */
@@ -27,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     long itemID;
     RecyclerView mRecyclerView;
     ArrayList <Entry> list;
-    MainAdapter adapter;
+    com.dimsun.simplenotes.MainAdapter adapter;
     ImageView tuto;
 
     @Override
@@ -83,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_main);
-        adapter = new MainAdapter(MainActivity.this, list);
+        adapter = new com.dimsun.simplenotes.MainAdapter(MainActivity.this, list);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
@@ -114,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void add(View view) {
-        Intent i = new Intent(this, olivia.dimsun.com.mydiaryapp.AddEntry.class);
+        Intent i = new Intent(this, AddEntry.class);
         startActivity(i);
         finish();
     }

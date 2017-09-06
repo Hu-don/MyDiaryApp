@@ -1,4 +1,4 @@
-package olivia.dimsun.com.mydiaryapp;
+package com.dimsun.simplenotes;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -18,9 +18,11 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import olivia.dimsun.com.simplenotes.R;
+
 public class AddEntry extends AppCompatActivity {
 
-    private EntryDbHelper mHelper;
+    private com.dimsun.simplenotes.EntryDbHelper mHelper;
     Context context;
     boolean isAnUpdate;
     SimpleDateFormat dateFormat;
@@ -39,13 +41,13 @@ public class AddEntry extends AppCompatActivity {
         entry = (EditText) findViewById(R.id.ed_entry);
         idEdit = (TextView) findViewById(R.id.idEdit);
 
-        mHelper = new EntryDbHelper(this);
+        mHelper = new com.dimsun.simplenotes.EntryDbHelper(this);
 
         Intent retrieveIntent = getIntent();
 
         if (retrieveIntent != null) {
-            intentText = retrieveIntent.getStringExtra(Constantes.ENTRY);
-            idRetrieved = retrieveIntent.getStringExtra(Constantes.ID);
+            intentText = retrieveIntent.getStringExtra(com.dimsun.simplenotes.Constantes.ENTRY);
+            idRetrieved = retrieveIntent.getStringExtra(com.dimsun.simplenotes.Constantes.ID);
 
             id = String.valueOf(idRetrieved);
             Log.i(TAG, "ID " + idRetrieved);
@@ -97,7 +99,7 @@ public class AddEntry extends AppCompatActivity {
             isAnUpdate = true;
         }
 
-        Intent i = new Intent(this, MainActivity.class);
+        Intent i = new Intent(this, com.dimsun.simplenotes.MainActivity.class);
         startActivity(i);
         finish();
     }
@@ -110,8 +112,8 @@ public class AddEntry extends AppCompatActivity {
         ContentValues values = new ContentValues();
         long idLong = Long.valueOf(id);
         idEdit.setText(id);
-        values.put(EntryContract.TaskEntry.COL_TASK_TITLE, entryStr);
-        db.update(EntryContract.TaskEntry.TABLE, values, "_id=" + idLong, null);
+        values.put(com.dimsun.simplenotes.EntryContract.TaskEntry.COL_TASK_TITLE, entryStr);
+        db.update(com.dimsun.simplenotes.EntryContract.TaskEntry.TABLE, values, "_id=" + idLong, null);
         db.close();
     }
 
@@ -122,10 +124,10 @@ public class AddEntry extends AppCompatActivity {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         idEdit.setText(id);
-        values.put(EntryContract.TaskEntry.COL_TASK_DATE, dateStr);
-        values.put(EntryContract.TaskEntry.COL_TASK_TITLE, entryStr);
+        values.put(com.dimsun.simplenotes.EntryContract.TaskEntry.COL_TASK_DATE, dateStr);
+        values.put(com.dimsun.simplenotes.EntryContract.TaskEntry.COL_TASK_TITLE, entryStr);
 
-        db.insertWithOnConflict(EntryContract.TaskEntry.TABLE,
+        db.insertWithOnConflict(com.dimsun.simplenotes.EntryContract.TaskEntry.TABLE,
                 null,
                 values,
                 SQLiteDatabase.CONFLICT_REPLACE);
@@ -149,7 +151,7 @@ public class AddEntry extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent back = new Intent (this, MainActivity.class);
+        Intent back = new Intent (this, com.dimsun.simplenotes.MainActivity.class);
         startActivity(back);
         finish();
     }

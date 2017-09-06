@@ -1,4 +1,4 @@
-package olivia.dimsun.com.mydiaryapp;
+package com.dimsun.simplenotes;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
+
+import olivia.dimsun.com.simplenotes.R;
+
 
 /**
  * Created by hudon on 10/08/2017.
@@ -93,7 +96,7 @@ class MainAdapter extends RecyclerView.Adapter <MainAdapter.RecyclerViewHolders>
             i.putExtra(Constantes.ENTRY, text);
             i.putExtra(Constantes.ID, id);
             itemView.getContext().startActivity(i);
-            ((MainActivity) context).finish();
+            ((com.dimsun.simplenotes.MainActivity) context).finish();
         }
     }
 }
